@@ -136,6 +136,9 @@
 	testing("[src] moving to [destination]. Areas are [english_list(shuttle_area)]")
 	var/list/translation = list()
 	for(var/area/A in shuttle_area)
+		if(istype(A, /area/space))
+			message_admins("OHHH GOD [src] IS TRYING TO MOVE SPACE!! NOOOOOOOOO")
+			return
 		testing("Moving [A]")
 		translation += get_turf_translation(get_turf(current_location), get_turf(destination), A.contents)
 	shuttle_moved(destination, translation)
@@ -163,7 +166,7 @@
 		var/turf/dst_turf = turf_translation[src_turf]
 		if(src_turf.is_solid_structure()) //in case someone put a hole in the shuttle and you were lucky enough to be under it
 			for(var/atom/movable/AM in dst_turf)
-				if(!AM.simulated)
+				if(1)//!AM.simulated)
 					continue
 				if(isliving(AM))
 					var/mob/living/bug = AM
